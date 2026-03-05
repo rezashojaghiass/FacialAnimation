@@ -1,0 +1,59 @@
+[3.73.33]
+
+New/improved:
+Compatibility: Blender 4.3: FBX export
+Export: New "Actions Linker" menu, to link an action to another one. Useful if exporting RigA animation, that depends on RigB through constraints (such as two characters holding each other's hands).\nIf animations are interdependent, it is necessary to declare these links for correct animation export.
+Export: New "One File per Actions List" setting, when enabling both "As Multiple Files" and "Actions Manager". This allows to export one file per Action List, including all actions in the list.
+Export: Godot: New setting to comply with Godot Root Motion axes
+Export Godot: Removed the "Root Motion" setting that bakes the c_traj animation to armature object, not relevant for Godot Root Motion.
+Export: Actions Lists: Filtered actions in the actions selector, so that actions that are already part of the current list are removed from the search list
+Export: GLTF: Exposed the "Start from frame 0" setting, in order to force the first frame of each action to be zero if enabled
+Export: UE: Removed the extra orientation tweaks applied to the spine bones when exporting with Mannequin axes. It was offsetting the angles by a few degrees to improve the match in case of straight spine bones, but can be misleading. It is best to align the spine bones manually. It can still be enabled in the "Legacy" menu though.
+Export: Actions Manager: New "Batch" feature to add multiple actions at once to a list, with filtering
+Export: UI: Added the "Rename Bones from File" checkbox in the properties panel too. Was confusing to have it only in the menu located in file export browser
+Export: Avoid operator when removing shape keys for faster performances
+Rig: Spline IK: Changed "Parent External Bone to" setting, was limited to the tip bone before. Now applies to all bones of the chain, and to Deforming or Twist bones instead of controllers. Can still be parented to controllers if necessary, by directly parenting Spline reference bones to them.
+Rig: Spline IK: New "Add Tail Bone" option. This adds an extra bone at the tip of the chain, that is not part of the main IK chain. Useful when needing to parent other limb to the tip, that must not be stretched or rotated with the main chain, such as rigging a spine for quadrupeds.
+Rig: Spline IK: New "Preserve Shape" option, to preserve the current shape when changing the amount of the spline bones.
+Rig: Spine: New "Preserve Shape" option, to preserve the current spine shape when changing the amount of bones
+Rig: Leg: New Limb Option to skip the foot IK offset alignment when Match to Rig, allowing custom positioning
+Rig: Spine: New "Parent Fallback" parameter in Limb Options, to set the default spine parent in case the root reference bone is not parented. By default parented to "c_traj". No parent if set to None.
+Rig: Tail: New "Preserve Shape" option, to preserve the current shape when changing the amount of the tail bones
+Rig: Spine, Tail, Spline IK: Removed "Update Transform" option, was confusing. Now, automatically update the bones transforms if the count was changed, using grid align or preserve shape if enabled.
+Rig: New Bulge setting for arm Joint Fans, allowing to add extra bulge deformation when the fans are spreading/folding. The created constraint can be manually edited afterwards.
+Rig: Apply Pose as Rest Pose: New "Apply Deformed Shape Keys" toggle, can be useful to speed up baking time in case deformations are not affecting shape keys
+Rig: New Bulge setting for leg Joints Fans too
+Rig: New Ankle Joints Fans
+Skin: Warning message in case of negative mesh scale when binding
+Picker: The picker camera is now set automatically when clicking "Add Picker"
+Picker: Support reverse spine bones
+Rig Tools: New "Extract Root Motion" function that tracks and bakes the "c_traj" controller to the pelvis position, while maintaining it on the floor, and preserving the rig animation
+Rig Tools: Extract Root Motion now supports Location Z with initial offset applied
+Rig Tools: Improved Extract Root Motion performances, around 4x faster (before: 24 sec for 400 frames, after: 6 sec)
+Rig Tools: Extract Root Motion: Added X and Y offsets
+Remap: Added "Extract Root Motion" as an option when retargetting
+Smart: Facial features are now togglable: Eyebrows, Eyes, Ears, Nose, Lips, Tongue, Teeth, Chin
+Smart: Auto filter mesh objects when clicking "Get Selected Objects". This avoids throwing an error if non-mesh objects are selected.
+Smart: UI: Moved the "Fingers" checkbox in the header of the Fingers tab to minimize redundancy
+
+Fixed:
+Rig: The horse rig was containing unwanted actions data leftovers
+Rig: Removed the "body_mid" collections coming from old armature presets
+Rig: Facial: Error when disabling the mouth bones
+Rig: Bottom bones had accidentally their Deform property turned off
+Rig: Apply Pose as Rest Pose crashing in case of numerous shape keys
+Rig: The Tail limb could have incorrect parent. No uses the default parent_retarget function
+Rig: The Dog preset had a "Connected" second spine bone, leading ot issue
+Rig: Thigh Joint Fans incorrectly parented to 3 Bones Leg Type 2
+Rig: Custom shapes of reversed spine controllers could be offset
+Rig: Kilt: When changing the amount of bones, the Z axis could be incorrectly oriented. Now calculates the curve normal vectors to align Z axes on.
+Export: Skinned objects having same name as export skeleton were clashing. It now throws a warning before exporting.
+Export: Add batch actions to Action Manager could generate an error if an action was removed from file
+Export: GLTF: Disabled the "export_apply" argument from the actual export, was preventing shape keys to export. Modifiers are pre-applied by AutoRigPro functions anyway, so no changes on the user side.
+Export: Error when exporting actions list containing removed actions
+Export: The exported skeleton was incorrectly named with an "_arpbob" suffix when the rig export name was the same as the armature name
+Export: Apply Shape Keys was failing if the basis shape key was not named "Basis". Now, always refer to the shape key at index 0 as Basis
+Export: Humanoid: Invalid fingers export when exporting more than 2 arms
+Export: Shape keys could not apply and export correctly under certain circumstances, was missing "from_mix" set to false
+Export: GLTF: Apply Modifiers was failing
+Rig Tools: Extract Root Motion quat_prev error
