@@ -38,6 +38,8 @@ Contains the AutoRig Pro addon (version 3.73.33) for Blender, a professional rig
 
 **Path:** `auto_rig_pro_3.73.33/auto_rig_pro-master/`
 
+⚠️ **Important:** AutoRig Pro is a paid addon. This repository includes a purchased copy. **Users must purchase their own license** to use this addon legally. Visit the official AutoRig Pro website to obtain your own copy.
+
 **Key Components:**
 - **src/** - Source code for the AutoRig Pro addon
   - Auto rigging functions
